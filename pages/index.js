@@ -4,14 +4,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import API from '../utils/API';
-import Main from '../components/MainNews';
-import Layout from '../components/Layout';
-import Business from '../components/BusinessNews';
-import Entertainment from '../components/EntertainmentNews';
-import Health from '../components/HealthNews';
-import Science from '../components/ScienceNews';
-import Sports from '../components/SportsNews';
-import Tech from '../components/TechNews';
+import Main from '../src/components/MainNews';
+import Layout from '../src/components/Layout';
+import Business from '../src/components/BusinessNews';
+import Entertainment from '../src/components/EntertainmentNews';
+import Health from '../src/components/HealthNews';
+import Science from '../src/components/ScienceNews';
+import Sports from '../src/components/SportsNews';
+import Tech from '../src/components/TechNews';
 
 
 class Index extends React.Component {
