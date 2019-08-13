@@ -4,6 +4,8 @@ import Link from 'next/link';
 function MainNews (props) {
   // Declare state variables
   const [country, setCountry] = useState('us');
+  const [initialPage, setInitialPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
 
   return (

@@ -1,11 +1,10 @@
 // main page section
 // sidebar section
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import axios from 'axios';
 import API from '../utils/API';
 import Main from '../src/components/MainNews';
-import Layout from '../src/components/Layout';
 import Business from '../src/components/BusinessNews';
 import Entertainment from '../src/components/EntertainmentNews';
 import Health from '../src/components/HealthNews';
@@ -16,7 +15,7 @@ import Tech from '../src/components/TechNews';
 
 class Index extends React.Component {
   static async getInitialProps() {
-    console.log(API);
+    
     try {
       const [main, biz, entern, general, health, science, sports, tech] = await axios.all([
         API.get('/top-headlines?country=us&pageSize=100'),
@@ -48,21 +47,21 @@ class Index extends React.Component {
 
   render() {
     return (
-      <Layout>
+
+      <div>
         <h1>Main page</h1>
-        <section className="wrapper wrapper__main">
+ 
           <Main mainNews={this.props.mainNews} />
-        </section>
-        <section className="wrapper wrapper__sidebar">
+
           <Business bizNews={this.props.bizNews} />
           <Entertainment entertainmentNews={this.props.entertainmentNews} />
           <Health healthNews={this.props.healthNews} />
           <Science scienceNews={this.props.scienceNews} />
           <Sports sportsNews={this.props.sportsNews} />
           <Tech techNews={this.props.techNews} />
-        </section>
+        </div>
         
-    </Layout>
+
     );
   }
 }
