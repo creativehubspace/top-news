@@ -17,16 +17,14 @@ function Business (props) {
 
 
   return (
-    <div>
-        <h1>Biz news</h1>
-        <ul>
-          {props.bizNews.map(article => (
-            <li key={article.url}>
-              {article.title}
-            </li>
-          ))}
-        </ul>
-    </div>
+    props.bizNews.map((article, index) => (
+      <div key={index}>
+      <h2>{article.title}</h2>
+        <img src={article.urlToImage} loading="lazy" alt="" />
+        <p>{article.description}</p>
+      </div>
+
+    ))
   );
 }
 

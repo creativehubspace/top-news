@@ -1,24 +1,24 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
+import styled from 'styled-components';
 
 function MainNews (props) {
   // Declare state variables
   const [country, setCountry] = useState('us');
-  const [initialPage, setInitialPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(10);
 
 
   return (
-    <div>
-        <h1>Main news</h1>
-        <ul>
-          {props.mainNews.map(article => (
-            <li key={article.url}>
-              {article.title}
-            </li>
-          ))}
-        </ul>
-    </div>
+      props.mainNews.map((article, index) => (
+        <div key={index}>
+        <h2>{article.title}</h2>
+          <img src={article.urlToImage} loading="lazy" alt="" />
+          <p>{article.description}</p>
+        </div>
+
+      ))
+
   );
 }
 

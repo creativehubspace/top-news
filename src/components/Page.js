@@ -43,6 +43,7 @@ const GlobalStyle = createGlobalStyle`
     color: ${theme.black};
   }
   button {  font-family: 'radnika_next'; }
+  img { max-width: 100%; }
 `;
 
 class Page extends Component {

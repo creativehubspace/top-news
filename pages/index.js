@@ -4,6 +4,7 @@
 import React from 'react';
 import axios from 'axios';
 import API from '../utils/API';
+import styled from 'styled-components';
 import Main from '../src/components/MainNews';
 import Business from '../src/components/BusinessNews';
 import Entertainment from '../src/components/EntertainmentNews';
@@ -11,9 +12,31 @@ import Health from '../src/components/HealthNews';
 import Science from '../src/components/ScienceNews';
 import Sports from '../src/components/SportsNews';
 import Tech from '../src/components/TechNews';
+import Pagination from '../src/components/Pagination';
 
+
+const StyledContainer = styled.div`
+  display: flex;
+`;
+
+const StyledMainPage = styled.div`
+  width: 60%;
+  margin: 0 15px;
+`;
+
+const StyledSidebar = styled.div`
+  width: 40%;
+`;
 
 class Index extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentPage: 1,
+      postsPerPage: 5
+    };
+  }
+
   static async getInitialProps() {
     
     try {
@@ -45,22 +68,52 @@ class Index extends React.Component {
     }
   }
 
+  //Get current posts
+  
+
   render() {
+    // Get current articles
+    const currentPage = this.state.currentPage;
+    const postsPerPage = this.state.postsPerPage;
+    const indexOfLastArticle = currentPage * postsPerPage;
+    const indexOfFirstArticle = indexOfLastArticle - postsPerPage;
+
+    // all news articles
+    const newsMain = this.props.mainNews;
+    const newsBiz = this.props.bizNews;
+    const newsEntern = this.props.entertainmentNews;
+    const newsSports = this.props.sportsNews;
+    const newsHealth = this.props.healthNews;
+    const newsScience = this.props.scienceNews;
+    const newsTech = this.props.techNews;
+
+
+    const currentMainArticle = newsMain.slice(indexOfFirstArticle, indexOfLastArticle);
+    const currentBizArticle = newsBiz.slice(indexOfFirstArticle, indexOfLastArticle);
+    const currentEnternArticle = newsEntern.slice(indexOfFirstArticle, indexOfLastArticle);
+    const currentSportsArticle = newsSports.slice(indexOfFirstArticle, indexOfLastArticle);
+    const currentHealthArticle = newsHealth.slice(indexOfFirstArticle, indexOfLastArticle);
+    const currentScienceArticle = newsScience.slice(indexOfFirstArticle, indexOfLastArticle);
+    const currentTechArticle = newsTech.slice(indexOfFirstArticle, indexOfLastArticle);
+
+    // change page
+    const paginate = pageNumber => this.setState({currentPage: pageNumber});
+
     return (
-
-      <div>
-        <h1>Main page</h1>
- 
-          <Main mainNews={this.props.mainNews} />
-
-          <Business bizNews={this.props.bizNews} />
-          <Entertainment entertainmentNews={this.props.entertainmentNews} />
-          <Health healthNews={this.props.healthNews} />
-          <Science scienceNews={this.props.scienceNews} />
-          <Sports sportsNews={this.props.sportsNews} />
-          <Tech techNews={this.props.techNews} />
-        </div>
-        
+      <StyledContainer>
+        <StyledMainPage>
+          <Main mainNews={currentMainArticle} />
+          <Pagination postsPerPage={postsPerPage} totalPosts={newsMain.length} paginate={paginate}></Pagination>
+        </StyledMainPage>
+        <StyledSidebar>
+          <Business bizNews={currentBizArticle} />
+          <Entertainment entertainmentNews={currentEnternArticle} />
+          <Health healthNews={currentHealthArticle} />
+          <Science scienceNews={currentScienceArticle} />
+          <Sports sportsNews={currentSportsArticle} />
+          <Tech techNews={currentTechArticle} />
+        </StyledSidebar>
+      </StyledContainer>
 
     );
   }
