@@ -1,7 +1,17 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const PagStyles = styled.ul`
+  display: flex;
+  justify-content: center;
+  li {
+    list-style-type: none;
+    margin-right: 10px;
+  }
+`;
 
 const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
-  const pageNumbers = [];
+    const pageNumbers = [];
 
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
     pageNumbers.push(i);
@@ -9,15 +19,15 @@ const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
 
   return (
     <nav>
-      <ul className='pagination'>
+      <PagStyles>
         {pageNumbers.map(number => (
-          <li key={number} className='page-item'>
-            <button onClick={() => paginate(number)}  className='page-link'>
-              {number}
-            </button>
-          </li>
+            <li key={number} className='page-item'>
+                <button onClick={() => paginate(number)} className='page-link'>
+                    {number}
+                </button>
+            </li>
         ))}
-      </ul>
+      </PagStyles>
     </nav>
   );
 };

@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import API from '../utils/API';
 import styled from 'styled-components';
+import API from '../utils/API';
 import EntertainmentNews from '../src/components/EntertainmentNews';
+import ArticlesWrapper from "../src/components/styles/ArticlesWrapperStyles";
+import Pagination from "../src/components/Pagination";
+
+//https://material-ui.com/components/cards/
 
 function Entertainment({ entertnmtnNews }) {
     const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage] = useState(5);
+    const [postsPerPage] = useState(10);
 
     const indexOfLastArticle = currentPage * postsPerPage;
     const indexOfFirstArticle = indexOfLastArticle - postsPerPage;
@@ -13,10 +17,20 @@ function Entertainment({ entertnmtnNews }) {
     const currentEnternArticle = entertnmtnNews.slice(indexOfFirstArticle, indexOfLastArticle);
 
     // change page
-    const paginate = pageNumber => this.setState({currentPage: pageNumber});
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
-        <EntertainmentNews entertainmentNews={currentEnternArticle}/>
+        <div>
+            <ArticlesWrapper>
+                <EntertainmentNews entertainmentNews={currentEnternArticle}/>
+            </ArticlesWrapper>
+            <Pagination
+                postsPerPage={postsPerPage}
+                totalPosts={entertnmtnNews.length}
+                paginate={paginate}
+            />
+        </div>
+
 
     );
 }

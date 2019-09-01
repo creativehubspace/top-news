@@ -1,37 +1,63 @@
-import React, { useState } from 'react';
-import Link from 'next/link'
-import styled from 'styled-components';
+import React, { useState, useEffect } from 'react';
+import Router from 'next/router';
 import API from '../utils/API';
-import Nav from '../src/components/Nav';
 import MainNews from '../src/components/MainNews';
 import Pagination from '../src/components/Pagination';
-
+import ArticlesWrapper from "../src/components/styles/ArticlesWrapperStyles";
+import Countries from "../src/components/Countries";
 
 function Index({ mainNews }) {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(5);
+    const [country, setCountry] = useState('uk');
+    const [news, setNews] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage] = useState(10);
 
-  // Get current articles
+    useEffect(() => {
+        const cntry = country;
+        const fetchPosts = async () => {
+            const res = await API.get('/top-headlines?country=' + cntry + '&pageSize=100');
+            setNews(res.data.articles);
+            mainNews = news;
+        };
 
-  const indexOfLastArticle = currentPage * postsPerPage;
-  const indexOfFirstArticle = indexOfLastArticle - postsPerPage;
+        fetchPosts();
+    }, [country]);
 
-  const currentMainArticle = mainNews.slice(indexOfFirstArticle, indexOfLastArticle);
+    const indexOfLastArticle = currentPage * postsPerPage;
+    const indexOfFirstArticle = indexOfLastArticle - postsPerPage;
 
-  return (
-      <div>
-        <Nav/>
-        <MainNews mainNews={currentMainArticle} />
-      </div>
+    const currentMainArticle = mainNews.slice(indexOfFirstArticle, indexOfLastArticle);
 
-  );
+    // Change page
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+    const handleChange = (event) => {
+        setCountry(event.target.value);
+    };
+
+    return (
+        <div>
+            <Countries
+                country={country}
+                handleChange={handleChange}
+            />
+            <ArticlesWrapper>
+                <MainNews mainNews={currentMainArticle} />
+            </ArticlesWrapper>
+            <Pagination
+                postsPerPage={postsPerPage}
+                totalPosts={mainNews.length}
+                paginate={paginate}
+            />
+        </div>
+    );
 }
 
 Index.getInitialProps = async () => {
-  const res = await API.get('/top-headlines?country=us&pageSize=100');
-  const mainNews = res.data.articles;
+    const res = await API.get('/top-headlines?country=us&pageSize=100');
+    const mainNews = res.data.articles;
 
-  return { mainNews }
+    return {mainNews}
 };
 
 export default Index;

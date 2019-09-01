@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import API from '../utils/API';
 import styled from 'styled-components';
+import API from '../utils/API';
 import TechNews from '../src/components/TechNews';
+import ArticlesWrapper from "../src/components/styles/ArticlesWrapperStyles";
+import Pagination from "../src/components/Pagination";
 
 function Tech({ techNews }) {
     const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage] = useState(5);
+    const [postsPerPage] = useState(10);
 
     // Get current articles
 
@@ -14,8 +16,20 @@ function Tech({ techNews }) {
 
     const currentTechArticle = techNews.slice(indexOfFirstArticle, indexOfLastArticle);
 
+    // change page
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
     return (
-        <TechNews techNews={currentTechArticle} />
+        <div>
+            <ArticlesWrapper>
+                <TechNews techNews={currentTechArticle} />
+            </ArticlesWrapper>
+            <Pagination
+                postsPerPage={postsPerPage}
+                totalPosts={techNews.length}
+                paginate={paginate}
+            />
+        </div>
     );
 }
 

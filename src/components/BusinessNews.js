@@ -7,22 +7,28 @@
 // https://www.robinwieruch.de/react-hooks-fetch-data/
 // listen on change here and update when country changes
 
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Link from 'next/link';
+import ArticleCard from "./styles/ArticleStyles";
 
-function Business (props) {
-  // Declare state variables
-  const [country, setCountry] = useState('us');
-  return (
-    props.bizNews.map((article, index) => (
-      <div key={index}>
-      <h2>{article.title}</h2>
-        <img src={article.urlToImage} loading="lazy" alt="" />
-        <p>{article.description}</p>
-      </div>
+function Business(props) {
+    // Declare state variables
+    const [country, setCountry] = useState('us');
 
-    ))
-  );
+    return (
+        props.bizNews.map((article, index) => (
+            <ArticleCard key={index}>
+                <img src={article.urlToImage} loading="lazy" alt=""/>
+                <div className="card-content">
+                    <h2>{article.title}</h2>
+                    <p>{article.description}</p>
+                    <a href={article.url} rel="noopener noreferrer " target="_blank">
+                      Read more here...
+                    </a>
+                </div>
+            </ArticleCard>
+        ))
+    );
 }
 
 export default Business;

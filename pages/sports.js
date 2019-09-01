@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import API from '../utils/API';
 import styled from 'styled-components';
+import API from '../utils/API';
 import SportsNews from '../src/components/SportsNews';
+import ArticlesWrapper from "../src/components/styles/ArticlesWrapperStyles";
+import Pagination from "../src/components/Pagination";
 
 function Sports({ sportsNews }) {
     const [currentPage, setCurrentPage] = useState(1);
@@ -13,10 +15,19 @@ function Sports({ sportsNews }) {
     const currentSportsArticle = sportsNews.slice(indexOfFirstArticle, indexOfLastArticle);
 
     // change page
-    const paginate = pageNumber => this.setState({currentPage: pageNumber});
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
-        <SportsNews sportsNews={currentSportsArticle} />
+        <div>
+            <ArticlesWrapper>
+                <SportsNews sportsNews={currentSportsArticle} />
+            </ArticlesWrapper>
+            <Pagination
+                postsPerPage={postsPerPage}
+                totalPosts={sportsNews.length}
+                paginate={paginate}
+            />
+        </div>
     );
 }
 

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import API from '../utils/API';
 import styled from 'styled-components';
+import API from '../utils/API';
 import HealthNews from '../src/components/HealthNews';
+import ArticlesWrapper from "../src/components/styles/ArticlesWrapperStyles";
+import Pagination from "../src/components/Pagination";
 
 function Health({ healthNews }) {
     const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage] = useState(5);
+    const [postsPerPage] = useState(10);
 
     const indexOfLastArticle = currentPage * postsPerPage;
     const indexOfFirstArticle = indexOfLastArticle - postsPerPage;
@@ -13,10 +15,19 @@ function Health({ healthNews }) {
     const currentHealthArticle = healthNews.slice(indexOfFirstArticle, indexOfLastArticle);
 
     // change page
-    const paginate = pageNumber => this.setState({currentPage: pageNumber});
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
-        <HealthNews healthNews={currentHealthArticle} />
+        <div>
+            <ArticlesWrapper>
+                <HealthNews healthNews={currentHealthArticle} />
+            </ArticlesWrapper>
+            <Pagination
+                postsPerPage={postsPerPage}
+                totalPosts={healthNews.length}
+                paginate={paginate}
+            />
+        </div>
     );
 }
 

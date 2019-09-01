@@ -1,21 +1,24 @@
-import React, {useState} from 'react';
-import Link from 'next/link';
-import styled from 'styled-components';
+import React, { useState, useEffect } from 'react';
+import API from '../../utils/API';
+import ArticleCard from "./styles/ArticleStyles";
 
 function MainNews(props) {
     // Declare state variables
     const [country, setCountry] = useState('us');
-    const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage, setPostsPerPage] = useState(10);
-
+    const [news, setNews] = useState([]);
 
     return (
         props.mainNews.map((article, index) => (
-            <div key={index}>
-                <h2>{article.title}</h2>
+            <ArticleCard key={index}>
                 <img src={article.urlToImage} loading="lazy" alt=""/>
-                <p>{article.description}</p>
-            </div>
+                <div className="card-content">
+                    <h2>{article.title}</h2>
+                    <p>{article.description}</p>
+                    <a href={article.url} rel="noopener noreferrer " target="_blank">
+                        Read more here...
+                    </a>
+                </div>
+            </ArticleCard>
 
         ))
 

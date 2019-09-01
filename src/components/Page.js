@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
+import styled, {ThemeProvider, createGlobalStyle} from 'styled-components';
 import Meta from './Meta';
+import Nav from './Nav';
 
 const theme = {
-  red: '#FF0000',
-  black: '#393939',
-  grey: '#3A3A3A',
-  lightgrey: '#E1E1E1',
-  offWhite: '#EDEDED',
-  maxWidth: '1000px',
-  bs: '0 12px 24px 0 rgba(0, 0, 0, 0.09)',
+    red: '#FF0000',
+    black: '#393939',
+    grey: '#3A3A3A',
+    lightgrey: '#E1E1E1',
+    offWhite: '#EDEDED',
+    bs: '0 12px 24px 0 rgba(0, 0, 0, 0.09)',
 };
 
 const StyledPage = styled.div`
@@ -17,10 +17,15 @@ const StyledPage = styled.div`
   color: ${props => props.theme.black};
 `;
 
+const Inner = styled.div`
+  margin: 0 auto;
+  padding: 2rem;
+`;
+
 const GlobalStyle = createGlobalStyle`
   @font-face {
     font-family: 'radnika_next';
-    src: url('/public/radnikanext-medium-webfont.woff2') format('woff2');
+    src: url('/static/radnikanext-medium-webfont.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
   }
@@ -41,24 +46,35 @@ const GlobalStyle = createGlobalStyle`
   a {
     text-decoration: none;
     color: ${theme.black};
+    font-weight: 400;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-size: 1.8rem;
+  }
+  p {
+    margin: 0;
+    line-height: 1.5;
+    font-weight: 400;
   }
   button {  font-family: 'radnika_next'; }
   img { max-width: 100%; }
 `;
 
 class Page extends Component {
-  render() {
-    return (
-      <ThemeProvider theme={theme}>
-        <StyledPage>
-          <GlobalStyle />
-          <Meta />
-          {this.props.children}
-        </StyledPage>
+    render() {
+        return (
+            <ThemeProvider theme={theme}>
+                <StyledPage>
+                    <GlobalStyle/>
+                    <Meta/>
+                    <Nav/>
+                    <Inner>{this.props.children}</Inner>
+                </StyledPage>
 
-      </ThemeProvider>
-    );
-  }
+            </ThemeProvider>
+        );
+    }
 }
 
 export default Page;
